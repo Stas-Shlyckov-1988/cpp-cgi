@@ -13,7 +13,7 @@ int main() {
     db = mysql_init(NULL);
     if (!db) return 1;
 	
-	struct connection c1;
+    struct connection c1;
 
     conn = mysql_real_connect(db, c1.host, c1.user, c1.password, c1.dbname, c1.port, NULL, 0);
     if (!conn) {
