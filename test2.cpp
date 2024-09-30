@@ -1,6 +1,7 @@
 //  g++ test2.cpp -o page1.cgi -L/usr/include/mysql -lmysqlclient
 #include <iostream>
 #include <mysql/mysql.h>
+#include "config_connect.h"
 
 using namespace std;
 
@@ -11,8 +12,10 @@ int main() {
 
     db = mysql_init(NULL);
     if (!db) return 1;
+	
+	struct connection c1;
 
-    conn = mysql_real_connect(db, "localhost", "mpeegy", "procedure", "test", 3306, NULL, 0);
+    conn = mysql_real_connect(db, c1.host, c1.user, c1.password, c1.dbname, c1.port, NULL, 0);
     if (!conn) {
         fprintf(stderr, "Failed to connect to database: Error: %s\n", mysql_error(db));
         mysql_close(conn);
