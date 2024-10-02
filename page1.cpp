@@ -1,4 +1,4 @@
-//  g++ test2.cpp -o page1.cgi -L/usr/include/mysql -lmysqlclient
+//  g++ page1.cpp -o page1.cgi -L/usr/include/mysql -lmysqlclient
 #include <iostream>
 #include <mysql/mysql.h>
 #include "config_connect.h"
