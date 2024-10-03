@@ -40,12 +40,14 @@ int main() {
     {
         unsigned long *lengths;
         lengths = mysql_fetch_lengths(res_set);
+       
         for(i = 0; i < num_fields; i++)
         {
+            if (i == 0)  cout << "<a href=\"/page2.cgi?id=" << row[i] << "\">" << endl;
             printf("[%.*s] ", (int) lengths[i],
                     row[i] ? row[i] : "NULL");
         }
-        printf("<br>");
+        printf("</a><br>");
     }
     cout << "</p>" << endl;
     mysql_free_result(res_set);
