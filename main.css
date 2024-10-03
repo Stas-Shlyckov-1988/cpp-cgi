@@ -3,5 +3,9 @@ body {
 }
 
 h1 {
-    color: red;
+    color: #141313;
+}
+
+body a {
+    color: lightslategray;
 }
