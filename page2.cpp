@@ -2,6 +2,7 @@
 #include <iostream>
 #include <mysql/mysql.h>
 #include <cgicc/Cgicc.h>
+#include <cstring>
 #include <string>
 #include "config_connect.h"
 
@@ -32,8 +33,10 @@ int main() {
 
     Cgicc cgi;
     string id = cgi("id");
-    //mysql_real_escape_string(conn, id, id.c_str(), strlen(id));
-    string query = "SELECT * FROM Staff WHERE id = " + id;
+    char to[strlen(id.c_str())*2+1]; 
+    mysql_real_escape_string(conn, to, id.c_str(), strlen(id.c_str()));
+    string idc = to;
+    string query = "SELECT * FROM Staff WHERE id = " + idc;
 
     mysql_query(conn, query.c_str());
     res_set = mysql_store_result(conn); 
