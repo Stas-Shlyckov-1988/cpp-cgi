@@ -9,11 +9,62 @@
 using namespace std;
 using namespace cgicc;
 
+MYSQL* db, * conn;
+MYSQL_RES* res_set;
+MYSQL_ROW row;
+
+int editf() {
+    Cgicc cgi;
+    string id = cgi("id");
+
+    char to[strlen(id.c_str()) * 2 + 1];
+    mysql_real_escape_string(conn, to, id.c_str(), strlen(id.c_str()));
+    string idc = to;
+    string query = "SELECT 1 FROM Staff WHERE id = " + idc;
+    mysql_query(conn, query.c_str());
+    res_set = mysql_store_result(conn);
+
+    //num_fields = mysql_num_fields(res_set);
+    bool rowExist = false;
+
+    while ((row = mysql_fetch_row(res_set)))
+    {
+        unsigned long* lengths;
+        lengths = mysql_fetch_lengths(res_set);
+
+        for (int i = 0; i < 1; i++)
+        {
+            
+            if (row[i]) rowExist = true;
+        }
+
+    }
+
+    if (rowExist) {
+        string name = cgi("name");
+        char nameTo[strlen(name.c_str()) * 2 + 1];
+        mysql_real_escape_string(conn, nameTo, name.c_str(), strlen(name.c_str()));
+        string namec = nameTo;
+
+        string position = cgi("position");
+        char positionTo[strlen(position.c_str()) * 2 + 1];
+        mysql_real_escape_string(conn, positionTo, position.c_str(), strlen(position.c_str()));
+        string positionc = positionTo;
+
+        query = "UPDATE Staff SET name = '" 
+            + namec + "', position = " 
+            + positionc + " WHERE id = " + idc;
+        
+        mysql_query(conn, query.c_str());
+    }
+
+    mysql_free_result(res_set);
+    mysql_close(conn);
+
+    return 0;
+}
 
 int main() {
-    MYSQL *db, *conn;
-    MYSQL_RES *res_set;
-    MYSQL_ROW row;
 
     db = mysql_init(NULL);
     if (!db) return 1;
@@ -31,6 +82,11 @@ int main() {
 
     Cgicc cgi;
     string id = cgi("id");
+    string edit = cgi("edit");
+    if (edit == "1") {
+        editf();
+        return 0;
+    }
     string query = "SELECT * FROM Staff";
     if (strlen(id.c_str()) > 0) {
         char to[strlen(id.c_str()) * 2 + 1];
