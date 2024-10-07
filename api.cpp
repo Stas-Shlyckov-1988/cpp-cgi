@@ -67,6 +67,8 @@ int editf() {
     mysql_free_result(res_set);
     mysql_close(conn);
 
+    cout << "{\"result\": 1}" << endl;
+
     return 0;
 }
 
