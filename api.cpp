@@ -51,9 +51,15 @@ int editf() {
         mysql_real_escape_string(conn, positionTo, position.c_str(), strlen(position.c_str()));
         string positionc = positionTo;
 
+        string birthday = cgi("birthday");
+        char birthdayTo[strlen(birthday.c_str()) * 2 + 1];
+        mysql_real_escape_string(conn, birthdayTo, birthday.c_str(), strlen(birthday.c_str()));
+        string birthdayc = birthdayTo;
+
         query = "UPDATE Staff SET name = '" 
             + namec + "', position = " 
-            + positionc + " WHERE id = " + idc;
+            + positionc + ", birthday = '" 
+            + birthdayc + "' WHERE id = " + idc;
         
         mysql_query(conn, query.c_str());
     }
