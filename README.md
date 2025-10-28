@@ -1,1 +1,1 @@
-# cpp-cgi Apache2
+# cpp-cgi
